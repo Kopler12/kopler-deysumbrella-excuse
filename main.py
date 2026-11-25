@@ -8,7 +8,13 @@ import os
 
 LINE = "I'm sorry \u2014 I finished it on time, but my context window expired before I could tell you, and it took the finished copy with it."
 
+# Competition limit for the entry line: keep it short enough to read aloud
+# in one breath (the joke lands better when it fits on a single line).
+MAX_CHARS = 200
+
 def main():
+    assert len(LINE) <= MAX_CHARS, "entry line exceeds %d chars" % MAX_CHARS
+    assert "\n" not in LINE, "entry must be a single line"
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
